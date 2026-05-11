@@ -1,126 +1,97 @@
-EmoJudge ⚖️🧠
+# EmoJudge ⚖️🧠
 
-AI-Powered Emotion Analysis Platform for Legal Testimonies
-
-
+## AI-Powered Emotion Analysis Platform for Legal Testimonies
 
 EmoJudge is a web-based AI application that helps attorneys analyze witness testimonies using facial emotion recognition and voice activity detection.
 
+---
 
+## 🚀 Features
 
-The system uses DeepFace, OpenCV, and Machine Learning techniques to identify emotions such as happy, sad, angry, fear, surprise, disgust, and neutral from testimony videos.
+- Facial Emotion Detection using DeepFace
+- Face Detection using OpenCV
+- Voice Activity Monitoring
+- Secure Login & Authentication
+- Video Upload and Analysis
+- Emotion Timeline Dashboard
 
+---
 
+## 🛠️ Technologies Used
 
-🚀 Features
+### Frontend
+- React.js
+- HTML
+- CSS
+- JavaScript
 
-Facial Emotion Detection using DeepFace
+### Backend
+- Python
+- FastAPI / Flask
+- OpenCV
+- DeepFace
+- TensorFlow
 
-Face Detection using OpenCV Haarcascade
+### Database
+- MongoDB / SQLite
 
-Voice Activity Monitoring
+---
 
-Secure Login \& Authentication
+## ▶️ How to Run
 
-Video Upload and Analysis
-
-Interactive Dashboard and Emotion Timeline
-
-Sample Witness Video Library
-
-🛠️ Technologies Used
-
-Frontend
-
-React.js
-
-HTML
-
-CSS
-
-JavaScript
-
-Backend
-
-Python
-
-FastAPI / Flask
-
-OpenCV
-
-DeepFace
-
-TensorFlow
-
-Database
-
-MongoDB / SQLite
-
-▶️ How to Run
-
-1\. Create Virtual Environment
-
+### Create Virtual Environment
+```powershell
 python -m venv venv
+.\venv\Scripts\Activate.ps1
+```
 
-.\\venv\\Scripts\\Activate.ps1
-
-2\. Install Dependencies
-
+### Install Dependencies
+```powershell
 pip install -r requirements.txt
-
 npm install
+```
 
-3\. Start Backend
+### Run Backend
+```powershell
+python start_backend.py
+```
 
-python start\_backend.py
+### Run Frontend
+```powershell
+.\start_frontend.bat
+```
 
-4\. Start Frontend
+---
 
-.\\start\_frontend.bat
-
-🌐 Application URLs
-
-
+## 🌐 URLs
 
 Frontend:
-
-
-
+```text
 http://localhost:3000
-
-
+```
 
 Backend:
-
-
-
+```text
 http://localhost:8000
+```
 
-🎯 Objectives
+---
 
-Detect emotions from witness videos
+## 📂 Project Structure
 
-Assist attorneys with emotional insights
-
-Improve legal decision-making
-
-Reduce bias in judicial analysis
-
-📂 Project Structure
-
+```text
 EmoJudge/
-
 ├── backend/
-
 ├── frontend/
-
-├── sample\_videos/
-
+├── sample_videos/
 └── README.md
+```
 
-📌 Developed For
+---
 
+## 🎯 Objectives
 
-
-AI-assisted legal testimony analysis and emotion recognition research.
-
+- Analyze emotions from witness videos
+- Assist attorneys with emotional insights
+- Improve legal decision-making
+- Reduce bias in testimony analysis
