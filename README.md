@@ -1,104 +1,112 @@
-\# EmoJudge ⚖️🧠
+EmoJudge ⚖️🧠
 
+AI-Powered Emotion Analysis Platform for Legal Testimonies
 
 
-\## AI-Powered Emotion Analysis Platform for Legal Testimonies
 
+EmoJudge is a web-based AI application that helps attorneys analyze witness testimonies using facial emotion recognition and voice activity detection.
 
 
-EmoJudge is a web-based AI application developed to assist attorneys in analyzing witness testimonies using facial emotion recognition and voice activity detection.
 
+The system uses DeepFace, OpenCV, and Machine Learning techniques to identify emotions such as happy, sad, angry, fear, surprise, disgust, and neutral from testimony videos.
 
 
-The system uses Artificial Intelligence, Computer Vision, and Deep Learning techniques to identify emotions such as Happy, Sad, Angry, Fear, Surprise, Disgust, and Neutral from witness testimony videos.
 
+🚀 Features
 
+Facial Emotion Detection using DeepFace
 
-\---
+Face Detection using OpenCV Haarcascade
 
+Voice Activity Monitoring
 
+Secure Login \& Authentication
 
-\# 🚀 Features
+Video Upload and Analysis
 
+Interactive Dashboard and Emotion Timeline
 
+Sample Witness Video Library
 
-\- Facial Emotion Detection using DeepFace
+🛠️ Technologies Used
 
-\- Face Detection using OpenCV Haarcascade
+Frontend
 
-\- Voice Activity Monitoring
+React.js
 
-\- Secure Login \& Authentication
+HTML
 
-\- Video Upload and Analysis
+CSS
 
-\- Interactive Dashboard and Emotion Timeline
+JavaScript
 
-\- Sample Witness Video Library
+Backend
 
+Python
 
+FastAPI / Flask
 
-\---
+OpenCV
 
+DeepFace
 
+TensorFlow
 
-\# 🛠️ Technologies Used
+Database
 
+MongoDB / SQLite
 
+▶️ How to Run
 
-\## Frontend
+1\. Create Virtual Environment
 
-\- React.js
+python -m venv venv
 
-\- HTML
+.\\venv\\Scripts\\Activate.ps1
 
-\- CSS
+2\. Install Dependencies
 
-\- JavaScript
+pip install -r requirements.txt
 
+npm install
 
+3\. Start Backend
 
-\## Backend
+python start\_backend.py
 
-\- Python
+4\. Start Frontend
 
-\- FastAPI / Flask
+.\\start\_frontend.bat
 
-\- OpenCV
+🌐 Application URLs
 
-\- DeepFace
 
-\- TensorFlow
 
+Frontend:
 
 
-\## Database
 
-\- MongoDB / SQLite
+http://localhost:3000
 
 
 
-\## AI \& Computer Vision
+Backend:
 
-\- CNN Models
 
-\- DeepFace Emotion Recognition
 
-\- Haarcascade Face Detection
+http://localhost:8000
 
-\- Voice Activity Detection
+🎯 Objectives
 
+Detect emotions from witness videos
 
+Assist attorneys with emotional insights
 
-\---
+Improve legal decision-making
 
+Reduce bias in judicial analysis
 
-
-\# 📂 Project Structure
-
-
-
-```text
+📂 Project Structure
 
 EmoJudge/
 
@@ -110,307 +118,9 @@ EmoJudge/
 
 └── README.md
 
-```
-
-
-
-\---
-
-
-
-\# ▶️ How to Run the Project
-
-
-
-\## 1️⃣ Clone the Repository
-
-
-
-```bash
-
-git clone <your-repository-link>
-
-cd EmoJudge
-
-```
-
-
-
-\---
-
-
-
-\## 2️⃣ Create Virtual Environment
-
-
-
-```powershell
-
-python -m venv venv
-
-.\\venv\\Scripts\\Activate.ps1
-
-```
-
-
-
-\---
-
-
-
-\## 3️⃣ Install Dependencies
-
-
-
-\### Backend Dependencies
-
-
-
-```powershell
-
-pip install -r requirements.txt
-
-```
-
-
-
-\### Frontend Dependencies
-
-
-
-```powershell
-
-npm install
-
-```
-
-
-
-\---
-
-
-
-\## 4️⃣ Start MongoDB
-
-
-
-Check MongoDB status:
-
-
-
-```powershell
-
-Get-Service MongoDB
-
-```
-
-
-
-If MongoDB is not running:
-
-
-
-```powershell
-
-Start-Service MongoDB
-
-```
-
-
-
-\---
-
-
-
-\## 5️⃣ Start Backend Server
-
-
-
-```powershell
-
-python start\_backend.py
-
-```
-
-
-
-Backend runs on:
-
-
-
-```text
-
-http://localhost:8000
-
-```
-
-
-
-API Documentation:
-
-
-
-```text
-
-http://localhost:8000/docs
-
-```
-
-
-
-\---
-
-
-
-\## 6️⃣ Start Frontend
-
-
-
-Open another terminal and run:
-
-
-
-```powershell
-
-.\\start\_frontend.bat
-
-```
-
-
-
-Frontend runs on:
-
-
-
-```text
-
-http://localhost:3000
-
-```
-
-
-
-\---
-
-
-
-\# 🌐 Application Workflow
-
-
-
-1\. User logs into the platform
-
-2\. Uploads or selects a witness testimony video
-
-3\. Video frames are extracted using OpenCV
-
-4\. Faces are detected using Haarcascade
-
-5\. DeepFace analyzes emotions from each frame
-
-6\. Audio is analyzed for speech activity
-
-7\. Results are displayed on the dashboard with emotion timelines and insights
-
-
-
-\---
-
-
-
-\# 🎯 Objectives
-
-
-
-\- Detect emotions from witness testimony videos
-
-\- Assist attorneys with objective emotional insights
-
-\- Improve legal decision-making
-
-\- Reduce emotional bias in judicial analysis
-
-
-
-\---
-
-
-
-\# 🧠 AI Techniques Used
-
-
-
-\- Convolutional Neural Networks (CNN)
-
-\- DeepFace Emotion Analysis
-
-\- OpenCV Video Processing
-
-\- Haarcascade Face Detection
-
-\- Voice Activity Detection
-
-
-
-\---
-
-
-
-\# 👨‍⚖️ Use Case
-
-
-
-Attorneys can upload or select witness videos and receive:
-
-\- Emotion analysis
-
-\- Speech activity insights
-
-\- Emotion timelines
-
-\- Legal guidance suggestions
-
-
-
-\---
-
-
-
-\# 🔮 Future Enhancements
-
-
-
-\- Real-time courtroom monitoring
-
-\- Speech-to-text transcription
-
-\- AI-generated legal reports
-
-\- Advanced stress detection
-
-\- Cloud deployment support
-
-
-
-\---
-
-
-
-\# 📌 Developed For
+📌 Developed For
 
 
 
 AI-assisted legal testimony analysis and emotion recognition research.
-
-
-
-\---
-
-
-
-\# 👩‍💻 Author
-
-
-
-Developed as a Mini Project on Artificial Intelligence and Web Technologies.
 
