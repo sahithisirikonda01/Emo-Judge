@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emotion Analysis</title>
+  <style>
+    body {
+      background-color: black;
+      color: gold;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+
+    .filter-bar {
+      margin-bottom: 20px;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      background: black;
+      color: gold;
+      border: 1px solid gold;
+    }
+
+    .video-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
+
+    .video-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 400px;
+      margin-bottom: 20px;
+    }
+
+    video {
+      width: 400px;
+      height: 250px;
+      cursor: pointer;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    video:hover {
+      transform: scale(1.05);
+    }
+
+    .video-item p {
+      color: #ffd700;
+      font-size: 14px;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .full-screen-container {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index: 999;
+    }
+
+    .full-screen-container.active {
+      display: flex;
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .full-screen-container video {
+      width: 70%;
+      height: 90%;
+      border-radius: 10px;
+    }
+
+    .side-panel {
+      width: 25%;
+      background: #1c1c1c;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+      color: gold;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: gold;
+      color: black;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+
+    .spinner {
+      border: 4px solid #444;
+      border-top: 4px solid gold;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 10px auto;
+      display: none;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div style="position: fixed; top: 20px; right: 30px; z-index: 999;">
+  <form action="/logout" method="get">
+    <button style="background-color: gold; color: black; padding: 10px 16px; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; cursor: pointer;">
+      Logout
+    </button>
+  </form>
+</div>
+
+  <h2>Select a Video to Analyze Emotions</h2>
+
+  <!-- Filter Dropdown -->
+  <div class="filter-bar">
+    <label for="contextFilter">Filter by Context:</label>
+    <select id="contextFilter" onchange="filterVideos()">
+      <option value="all">All</option>
+      <option value="burglary">Burglary</option>
+      <option value="home">Home Invasion</option>
+      <option value="fraud">Fraud</option>
+      <option value="accident">Accident</option>
+      <option value="harassment">Harassment</option>
+      <option value="cyber">Cybercrime</option>
+      <option value="murder">Murder</option>
+    </select>
+  </div>
+
+  <!-- Video Grid -->
+  <div class="video-container" id="videoSelection">
+    <div class="video-item">
+  <video src="{{ url_for('serve_video', filename='video1.mp4') }}" onclick="openFullScreen(this)" controls></video>
+  <p>Witness 1: Recalling events of a late-night burglary at a convenience store.</p>
+</div>
+
+<div class="video-item">
+  <video src="{{ url_for('serve_video', filename='video2.mp4') }}" onclick="openFullScreen(this)" controls></video>
+  <p>Witness 2: Describing confrontation with the accused during a home invasion.</p>
+</div>
+
+<div class="video-item">
+  <video src="{{ url_for('serve_video', filename='video3.mp4') }}" onclick="openFullScreen(this)" controls></video>
+  <p>Witness 3: Responding to questions about stolen documents in a corporate fraud case.</p>
+</div>
+
+<div class="video-item">
+  <video src="{{ url_for('serve_video', filename='video4.mp4') }}" onclick="openFullScreen(this)" controls></video>
+  <p>Witness 4: Narrating experience of witnessing a hit-and-run accident downtown.</p>
+</div>
+
+<div class="video-item">
+  <video src="{{ url_for('serve_video', filename='video5.mp4') }}" onclick="openFullScreen(this)" controls></video>
+  <p>Witness 5: Describing suspicious behavior during a bank transaction fraud investigation.</p>
+</div>
+  </div>
+
+  <!-- Full-Screen Player and Side Panel -->
+  <div id="fullScreenContainer" class="full-screen-container">
+    <button class="close-btn" onclick="closeFullScreen()">✖</button>
+    <video id="fullScreenVideo" controls></video>
+    <div class="side-panel">
+      <h3>Emotion Analysis</h3>
+      <div class="spinner" id="loadingSpinner"></div>
+      <p><strong>Detected Emotion:</strong> <span id="emotionText">-</span></p>
+      <p><strong>Advice:</strong> <span id="adviceText">-</span></p>
+    </div>
+  </div>
+
+  <script>
+    let currentVideo = null;
+    let emotionInterval = null;
+
+    function openFullScreen(videoElement) {
+      const fullScreenContainer = document.getElementById("fullScreenContainer");
+      const fullScreenVideo = document.getElementById("fullScreenVideo");
+      const videoSelection = document.getElementById("videoSelection");
+
+      videoSelection.style.display = "none";
+      fullScreenVideo.src = videoElement.src;
+      fullScreenContainer.classList.add("active");
+      fullScreenVideo.play();
+
+      currentVideo = fullScreenVideo;
+      emotionInterval = setInterval(analyzeEmotions, 4000);
+    }
+
+    function closeFullScreen() {
+      const fullScreenContainer = document.getElementById("fullScreenContainer");
+      const fullScreenVideo = document.getElementById("fullScreenVideo");
+      const videoSelection = document.getElementById("videoSelection");
+
+      fullScreenVideo.pause();
+      fullScreenContainer.classList.remove("active");
+      videoSelection.style.display = "flex";
+      clearInterval(emotionInterval);
+    }
+
+    function filterVideos() {
+      const filter = document.getElementById("contextFilter").value.toLowerCase();
+      const items = document.querySelectorAll(".video-item");
+
+      items.forEach(item => {
+        const contextText = item.querySelector("p").textContent.toLowerCase();
+        item.style.display = (filter === "all" || contextText.includes(filter)) ? "flex" : "none";
+      });
+    }
+
+    async function analyzeEmotions() {
+      if (!currentVideo) return;
+
+      const spinner = document.getElementById("loadingSpinner");
+      spinner.style.display = "block";
+
+      let time = Math.round(currentVideo.currentTime);
+      let videoSrc = currentVideo.src.split('/').pop();
+
+      try {
+        let response = await fetch("http://127.0.0.1:8000/analyze_emotion/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ video_path: videoSrc, time: time })
+        });
+
+        let result = await response.json();
+        if (result.error === "No face detected") {
+          console.log("No face detected at time:", time);
+          return;
+        }
+
+        document.getElementById("emotionText").textContent = result.detected_emotion || "-";
+        document.getElementById("adviceText").textContent = result.advice || "-";
+
+      } catch (error) {
+        console.error("Error analyzing emotions:", error);
+      } finally {
+        spinner.style.display = "none";
+      }
+    }
+    let audioContext;
+let analyser;
+let microphone;
+let javascriptNode;
+let isSpeaking = false;
+
+async function setupMicrophone() {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        analyser = audioContext.createAnalyser();
+        microphone = audioContext.createMediaStreamSource(stream);
+        javascriptNode = audioContext.createScriptProcessor(2048, 1, 1);
+
+        analyser.smoothingTimeConstant = 0.8;
+        analyser.fftSize = 1024;
+
+        microphone.connect(analyser);
+        analyser.connect(javascriptNode);
+        javascriptNode.connect(audioContext.destination);
+
+        javascriptNode.onaudioprocess = function () {
+            let array = new Uint8Array(analyser.frequencyBinCount);
+            analyser.getByteFrequencyData(array);
+            let volume = array.reduce((a, b) => a + b, 0) / array.length;
+
+            // Thresholds can be adjusted
+            if (volume > 30 && !isSpeaking) {
+                isSpeaking = true;
+                sendVoiceStatus(true);
+                console.log("Speaking: " + isSpeaking);
+ // Person started speaking/stressed
+            } else if (volume <= 15 && isSpeaking) {
+                isSpeaking = false;
+                sendVoiceStatus(false); // Person stopped speaking
+            }
+        };
+    } catch (error) {
+        console.error("Microphone access denied:", error);
+    }
+}
+
+function sendVoiceStatus(speaking) {
+    fetch("/update_voice_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ speaking: speaking })
+    });
+}
+
+setupMicrophone();
+  </script>
+</body>
+</html>
+
